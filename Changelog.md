@@ -1,5 +1,8 @@
 ### 0.7.3 (unreleased)
 
+Language Features:
+ * Constants can be defined at file level.
+
 Compiler Features:
  * SMTChecker: Support ``addmod`` and ``mulmod``.
  * SMTChecker: Support array slices.
