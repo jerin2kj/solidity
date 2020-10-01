@@ -1,4 +1,12 @@
 [
+	{
+		"name": "DynamicArrayCleanup",
+		"summary": "When assigning a dynamic-array in storage, whose types are packed into a slot, certain part of slots were not zeroed out.",
+		"description": "Consider a dynamic-array in storage whose base-type can be packed into a single slot, such as `uint128[]`. Let us define its length to be `l`. When this array gets assigned by another dynamic array with a smaller length, say `m`, the slots between `l` and `m` has to be cleaned by zeroing them out. However, this cleaning was not performed properly. Specifically, if `k` is the number of elements that are packed into a single slot, then from slots `m/k + 1` until `l/k`,  only the first packed value was cleaned up. If this array gets resized to a length larger than `m`, the indices corresponding to the unclean parts of the slot contained the old value, instead of 0. The resizing here is performed by assigning to the array `slot` or assigning to the array `length` or by a `push()`.",
+		"introduced": "0.4.11",
+		"fixed": "0.7.3",
+		"severity": "medium"
+	},
     {
         "name": "FreeFunctionRedefinition",
         "summary": "The compiler does not flag an error when two or more free functions with the same name and parameter types are defined in a source unit or when an imported free function alias shadows another free function with a different name but identical parameter types.",
