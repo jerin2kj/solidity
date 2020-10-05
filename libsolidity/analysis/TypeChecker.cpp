@@ -2477,6 +2477,7 @@ void TypeChecker::endVisit(NewExpression const& _newExpression)
 	solAssert(!!type, "Type name not resolved.");
 
 	_newExpression.annotation().isConstant = false;
+	_newExpression.annotation().isLValue = false;
 
 	if (auto contractName = dynamic_cast<UserDefinedTypeName const*>(&_newExpression.typeName()))
 	{
@@ -2537,7 +2538,10 @@ void TypeChecker::endVisit(NewExpression const& _newExpression)
 		_newExpression.annotation().isPure = true;
 	}
 	else
+	{
+		_newExpression.annotation().isPure = false;
 		m_errorReporter.fatalTypeError(8807_error, _newExpression.location(), "Contract or array type expected.");
+	}
 }
 
 bool TypeChecker::visit(MemberAccess const& _memberAccess)
